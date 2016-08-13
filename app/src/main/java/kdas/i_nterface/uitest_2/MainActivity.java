@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,11 +17,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> contacts = new ArrayList<String>();;
+    ArrayList<String> contacts = new ArrayList<String>();
     Cursor cursor;
     Thread readc;
 
-    boolean thread_kill = false;
+    boolean thread_kill = false, read_done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
-        Log.d("size :: ", contacts.toString());
+//        if (read_done)
+//            Toast.makeText(getApplicationContext(), "ffd" + contacts.size(), Toast.LENGTH_LONG).show();
+//        else
+//            Toast.makeText(getApplicationContext(), "ffd", Toast.LENGTH_LONG).show();
 
+    }
+
+    public void size(ArrayList<String> temp){
+        Toast.makeText(getApplicationContext(), "ffd" + temp.size(), Toast.LENGTH_LONG).show();
     }
 
     public void readContacts(){
@@ -92,6 +100,24 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.d("size :: ", "dsdsds");
             writef(contacts);
+
+//            Handler h = new Handler(Looper.getMainLooper());
+//            h.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Toast.makeText(getApplicationContext(), "Hello, from the thread", Toast.LENGTH_LONG).show();
+//                }
+//            });
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Hello, from the thread ++ " + contacts.size(), Toast.LENGTH_LONG).show();
+
+                }
+            });
+            //size(contacts);
+            read_done = true;
             thread_kill = true;
 
 
@@ -109,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             fout.write(data.toString().getBytes());
             fout.close();
             Log.d("file", "file");
+//            Toast.makeText(getApplicationContext(), "ffd", Toast.LENGTH_LONG).show();
+
 
         }catch (IOException e){
             e.printStackTrace();
