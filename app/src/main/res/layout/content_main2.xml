@@ -14,14 +14,14 @@
         android:id="@+id/view"
         android:background="@color/colorAccent"/>
 
-
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fab"
-        android:background="@color/some_teal"
+        app:backgroundTint="@color/some_teal"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
 
 
 </RelativeLayout>

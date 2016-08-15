@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
-//        if (read_done)
-//            Toast.makeText(getApplicationContext(), "ffd" + contacts.size(), Toast.LENGTH_LONG).show();
-//        else
-//            Toast.makeText(getApplicationContext(), "ffd", Toast.LENGTH_LONG).show();
+        if (read_done)
+            Toast.makeText(getApplicationContext(), "ffd" + contacts.size(), Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getApplicationContext(), "ffd", Toast.LENGTH_LONG).show();
 
     }
 
@@ -116,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-            //size(contacts);
+
+
+
             read_done = true;
             thread_kill = true;
 
@@ -142,4 +144,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
 }

@@ -4,4 +4,13 @@
     <color name="colorPrimaryDark">#03A9F4</color>
     <color name="colorAccent">#039BE5</color>
     <color name="some_teal">#1D9788</color>
+    <color name="yellow">#F9A825</color>
+    <color name="yellow_2">#FFEB3B</color>
+    <color name="grey">#BDBDBD</color>
+
+    <array name="dot_colors">
+        <item>#03A9F4</item>
+        <item>#E65100</item>
+        <item>#FFBB00</item>
+    </array>
 </resources>
