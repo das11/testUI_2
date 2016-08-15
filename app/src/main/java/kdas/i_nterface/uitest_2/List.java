@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class List extends AppCompatActivity {
 
     Contact_adapter adapter;
 
+    com.bhargavms.dotloader.DotLoader loader, loader2;
+
     Cursor cursor;
 
 
@@ -36,6 +39,10 @@ public class List extends AppCompatActivity {
         getSupportActionBar().hide();
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+
+        loader = (com.bhargavms.dotloader.DotLoader)findViewById(R.id.text_dot_loader_toolbar);
+        loader2 = (com.bhargavms.dotloader.DotLoader)findViewById(R.id.text_dot_loader);
+        loader.setVisibility(View.INVISIBLE);
 
         RecyclerView rv = (RecyclerView)findViewById(R.id.view_rv);
 //        for (int i = 0; i < 10; ++i){
@@ -70,6 +77,9 @@ public class List extends AppCompatActivity {
 
        // @Override
         protected void onPostExecute(String temp){
+
+            loader2.setVisibility(View.GONE);
+            loader.setVisibility(View.VISIBLE);
 
             Log.d("Hash :", contact_name.size() + "");
             for (int i = 0; i < contact_num.size(); ++i){
@@ -141,7 +151,7 @@ public class List extends AppCompatActivity {
             List.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), "Hello, from the thread ++ " + contact.size(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Hello, from the thread ++ " + contact_name.size(), Toast.LENGTH_LONG).show();
 
                 }
             });

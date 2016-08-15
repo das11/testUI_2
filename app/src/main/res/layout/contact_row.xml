@@ -67,16 +67,19 @@
         android:layout_marginLeft="20dp"
         android:src="@drawable/add_con"
         app:fabSize="mini"
+        app:elevation="5dp"
         app:backgroundTint="@color/yellow"
         />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
         android:id="@+id/fab2"
         app:layout_anchor="@+id/view3"
+        app:elevation="5dp"
         app:layout_anchorGravity="right|end|bottom"
-        android:layout_marginRight="70dp"
+        android:layout_marginRight="65dp"
         android:layout_marginTop="30dp"
         app:fabSize="mini"
         android:src="@drawable/ping_w"

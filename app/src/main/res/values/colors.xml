@@ -13,4 +13,9 @@
         <item>#E65100</item>
         <item>#FFBB00</item>
     </array>
+
+    <array name="dot_colors_toolbar">
+        <item>#ffffff</item>
+        <item>#BDBDBD</item>
+    </array>
 </resources>
