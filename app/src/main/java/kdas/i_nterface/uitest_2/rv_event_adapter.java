@@ -96,6 +96,26 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
                     default: //
                 }
             }
+            else {
+                switch (i){
+                    case 0 : {
+                        holder.pre1.setVisibility(View.INVISIBLE);
+                        break;
+                    }
+
+                    case 1 : {
+                        holder.pre2.setVisibility(View.INVISIBLE);
+                        break;
+                    }
+
+                    case 2 : {
+                        holder.pre3.setVisibility(View.INVISIBLE);
+                        break;
+                    }
+
+                    default: //
+                }
+            }
         }
     }
 

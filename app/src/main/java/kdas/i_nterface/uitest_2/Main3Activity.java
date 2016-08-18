@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,8 @@ public class Main3Activity extends AppCompatActivity {
 
     java.util.List<events> mevents = new ArrayList<>();
     rv_event_adapter adapter;
+
+    int test_rv_inflate = 10000;
 
     Boolean[] count = new Boolean[3];
 
@@ -29,13 +32,15 @@ public class Main3Activity extends AppCompatActivity {
             count[i] = true;
         }
 
-        for (int i = 0; i < 10000; ++i){
+        for (int i = 0; i < test_rv_inflate; ++i){
             mevents.add(new events(count));
         }
         adapter = new rv_event_adapter(this, mevents);
         events_rv.setAdapter(adapter);
         events_rv.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
+
+        Toast.makeText(getApplicationContext(), test_rv_inflate + " RV rows drawn, dayummm!", Toast.LENGTH_SHORT).show();
 
 
     }
