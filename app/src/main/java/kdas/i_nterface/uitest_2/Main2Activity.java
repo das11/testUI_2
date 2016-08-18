@@ -31,6 +31,17 @@ public class Main2Activity extends AppCompatActivity {
                 }
             });
         }
+
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab_main_2);
+        if (fab2 != null){
+            fab2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(Main2Activity.this, Main3Activity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
 }

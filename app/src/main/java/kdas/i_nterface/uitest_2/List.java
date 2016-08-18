@@ -1,11 +1,15 @@
 package kdas.i_nterface.uitest_2;
 
+import android.Manifest;
 import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +22,9 @@ import java.util.ArrayList;
 
 public class List extends AppCompatActivity {
 
+
     boolean read_done = false;
+    boolean contacts_perm = false;
 
     java.util.List<Contacts> contact = new ArrayList<Contacts>();
     ArrayList<String> contact_name = new ArrayList<>();
@@ -49,13 +55,59 @@ public class List extends AppCompatActivity {
 //            contact.add(new Contacts("Leo", "3213212332"));
 //        }
 
-        new read_async().execute("");
+        askForPermission(Manifest.permission.READ_CONTACTS, 11);
+
+
+//        if (contacts_perm)
+//            new read_async().execute("");
+//        else
+//            askForPermission(Manifest.permission.WRITE_CONTACTS, 11);
+
 
         adapter = new Contact_adapter(this, contact);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
         //adapter.notifyDataSetChanged();
 
+    }
+
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(List.this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(List.this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(List.this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(List.this, new String[]{permission}, requestCode);
+            }
+        } else {
+            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
+            switch (requestCode) {
+                //Location
+                case 11:
+                    //askForGPS();
+                    new read_async().execute("");
+                    contacts_perm = true;
+                    Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }else{
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class read_async extends AsyncTask<String, Void, String>{
