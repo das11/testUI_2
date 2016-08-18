@@ -55,13 +55,13 @@ public class List extends AppCompatActivity {
 //            contact.add(new Contacts("Leo", "3213212332"));
 //        }
 
+
+
         askForPermission(Manifest.permission.READ_CONTACTS, 11);
-
-
-//        if (contacts_perm)
-//            new read_async().execute("");
-//        else
-//            askForPermission(Manifest.permission.WRITE_CONTACTS, 11);
+        if (contacts_perm)
+            new read_async().execute("");
+        else
+            askForPermission(Manifest.permission.READ_CONTACTS, 11);
 
 
         adapter = new Contact_adapter(this, contact);
@@ -86,7 +86,12 @@ public class List extends AppCompatActivity {
                 ActivityCompat.requestPermissions(List.this, new String[]{permission}, requestCode);
             }
         } else {
-            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+            contacts_perm = true;
+            Toast.makeText(this, "" + permission + " is already granted. :: " + contacts_perm, Toast.LENGTH_SHORT).show();
+
+
+            //new read_async().execute("");
+
         }
     }
 
