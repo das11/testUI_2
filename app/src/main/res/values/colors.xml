@@ -14,7 +14,7 @@
     <color name="some_neon">#20FFff</color>
     <color name="some_accent">#32A9E3</color>
     <color name="some_red">#E65100</color>
-
+    <color name="some_white">#FCFAFA</color>
     <array name="dot_colors">
         <item>#03A9F4</item>
         <item>#E65100</item>
