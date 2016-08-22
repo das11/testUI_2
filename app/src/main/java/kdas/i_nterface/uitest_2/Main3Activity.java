@@ -20,6 +20,7 @@ import java.util.*;
 public class Main3Activity extends AppCompatActivity {
 
     java.util.List<events> mevents = new ArrayList<>();
+    RecyclerView events_rv;
     rv_event_adapter adapter;
 
     int test_rv_inflate = 10000;
@@ -34,7 +35,7 @@ public class Main3Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_event);
         //setSupportActionBar(toolbar);
 
-        RecyclerView events_rv = (RecyclerView)findViewById(R.id.rv_schedule);
+        events_rv = (RecyclerView)findViewById(R.id.rv_schedule);
         final FloatingActionButton month_fab = (FloatingActionButton)findViewById(R.id.fab_month);
         final com.github.sundeepk.compactcalendarview.CompactCalendarView month_view = (com.github.sundeepk.compactcalendarview.CompactCalendarView)findViewById(R.id.compactcalendar_view);
 
@@ -64,11 +65,14 @@ public class Main3Activity extends AppCompatActivity {
                             month_view.setVisibility(View.INVISIBLE);
 
                     }
+
+                    //((LinearLayoutManager) events_rv.getLayoutManager()).scrollToPositionWithOffset(10, 0);
+
                 }
             });
         }
         //#########
-        String d = "08-02-2016";
+        String d = "01-01-2016";
         SimpleDateFormat parser = new SimpleDateFormat("MM-dd-yyyy");
         Date test = new Date();
         try {
@@ -98,14 +102,18 @@ public class Main3Activity extends AppCompatActivity {
                     // current date object - dateClicked doesnt fetch time
 
                     Log.d("Date clicked", dateClicked + "");
-                    Date date = dateClicked;
 
-                    Event cev = new Event(R.color.some_teal2, date.getTime(), "" );
+                    Event cev = new Event(R.color.some_teal2, dateClicked.getTime(), "" );
                     month_view.addEvent(cev, true);
                     java.util.List<Event> ev = month_view.getEvents(dateClicked);
+                    ((LinearLayoutManager) events_rv.getLayoutManager()).scrollToPositionWithOffset(getposition_from_time(dateClicked), 0);
+
                     Toast.makeText(getApplicationContext(), ev + "", Toast.LENGTH_LONG).show();
-                    Log.d("cev :: ", date + "" + cev);
+                    Log.d("cev :: ", dateClicked + " " + cev);
                     Log.d("prev_ev ::", ev + "");
+                    Log.d("hash", dateClicked.hashCode() + "");
+                    Log.d("POS_date", getposition_from_time(dateClicked) + "");
+                    Log.d("Date_pos", getdate_from_pos(getposition_from_time(dateClicked)) + "");
                 }
 
                 @Override
@@ -115,7 +123,31 @@ public class Main3Activity extends AppCompatActivity {
             });
         }
 
+        ((LinearLayoutManager) events_rv.getLayoutManager()).scrollToPositionWithOffset(adapter.return_present_pos(), 0);
 
+    }
 
+    public int getposition_from_time(Date date){
+
+        int pos = 0;
+        for (long i = 1451586600000L; i < date.getTime(); i += 86400000){
+            ++pos;
+        }
+        return pos;
+    }
+
+    public Date getdate_from_pos(int pos){
+
+        Date start = new Date(1451586600000L);
+        int count = 0;
+        for (int i = 0; i < pos; ++i){
+            ++count;
+        }
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(start);
+        cal.add(Calendar.DATE, count);
+        //Date date = cal.getTime();
+
+        return cal.getTime();
     }
 }

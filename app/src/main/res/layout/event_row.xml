@@ -23,17 +23,6 @@
             android:paddingBottom="10dp">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/textView"
-                android:layout_marginStart="10dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="7dp" />
-
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
@@ -41,9 +30,8 @@
                 android:src="@drawable/summer"
                 app:civ_border_width="0dp"
                 app:civ_border_color="#FFFFFF"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/textView"
-                android:layout_alignStart="@+id/textView" />
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
 
             <com.github.pavlospt.CircleView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -54,8 +42,8 @@
                 app:cv_subtitleText=""
                 app:cv_strokeColorValue="@color/some_accent"
                 app:cv_fillColor="@color/yellow"
-                android:layout_marginTop="37dp"
-                android:layout_alignTop="@+id/pro"
+                android:layout_marginTop="43dp"
+                android:layout_below="@+id/line"
                 android:layout_toEndOf="@+id/pro" />
 
             <com.github.pavlospt.CircleView
@@ -83,6 +71,33 @@
                 android:layout_alignTop="@+id/cir3"
                 android:layout_toEndOf="@+id/cir3"
                 android:layout_marginStart="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:textSize="25sp"
+                android:id="@+id/day_month"
+                android:layout_marginStart="15dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/pro"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunday"
+                android:id="@+id/day_week"
+                android:layout_below="@+id/day_month"
+                android:layout_alignStart="@+id/day_month" />
+
+            <View
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:background="#c0c0c0"
+                android:id="@+id/line"
+                android:layout_below="@+id/day_week"
+                android:layout_alignStart="@+id/day_week" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
