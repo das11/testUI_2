@@ -16,6 +16,7 @@ import com.github.sundeepk.compactcalendarview.domain.Event;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class Main3Activity extends AppCompatActivity {
 
@@ -25,7 +26,8 @@ public class Main3Activity extends AppCompatActivity {
 
     int test_rv_inflate = 10000;
 
-    Boolean[] count = new Boolean[3];
+    //Boolean[] count = new Boolean[3];
+    List<String> count = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,8 @@ public class Main3Activity extends AppCompatActivity {
         final com.github.sundeepk.compactcalendarview.CompactCalendarView month_view = (com.github.sundeepk.compactcalendarview.CompactCalendarView)findViewById(R.id.compactcalendar_view);
 
         for (int i = 0; i < 3; ++i){
-            count[i] = true;
+            //count[i] = true;
+            count.add(i, "true");
         }
 
         for (int i = 0; i < test_rv_inflate; ++i){

@@ -35,42 +35,40 @@
 
             <com.github.pavlospt.CircleView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="80dp"
-                android:layout_height="90dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:id="@+id/cir2"
                 app:cv_titleText=""
                 app:cv_subtitleText=""
                 app:cv_strokeColorValue="@color/some_accent"
-                app:cv_fillColor="@color/yellow"
-                android:layout_marginTop="43dp"
-                android:layout_below="@+id/line"
-                android:layout_toEndOf="@+id/pro" />
+                app:cv_fillColor="#ffffff"
+                android:layout_alignTop="@+id/imageView4"
+                android:layout_toEndOf="@+id/cir4" />
 
             <com.github.pavlospt.CircleView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="80dp"
-                android:layout_height="90dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:id="@+id/cir3"
                 app:cv_titleText=""
                 app:cv_subtitleText=""
                 app:cv_strokeColorValue="@color/some_accent"
-                app:cv_fillColor="@color/some_red"
-                android:layout_marginStart="10dp"
+                app:cv_fillColor="#ffffff"
                 android:layout_alignTop="@+id/cir2"
-                android:layout_toEndOf="@+id/cir2" />
+                android:layout_toEndOf="@+id/cir2"
+                android:layout_marginStart="6dp" />
 
             <com.github.pavlospt.CircleView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="80dp"
+                android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:id="@+id/cir4"
                 app:cv_titleText=""
                 app:cv_subtitleText=""
                 app:cv_strokeColorValue="@color/some_accent"
-                app:cv_fillColor="@color/some_teal"
-                android:layout_alignTop="@+id/cir3"
-                android:layout_toEndOf="@+id/cir3"
-                android:layout_marginStart="10dp" />
+                app:cv_fillColor="#FFFFFF"
+                android:layout_below="@+id/imageView"
+                android:layout_alignStart="@+id/line" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,10 +76,9 @@
                 android:text="12"
                 android:textSize="25sp"
                 android:id="@+id/day_month"
-                android:layout_marginStart="15dp"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/pro"
-                android:layout_marginTop="6dp" />
+                android:layout_below="@+id/pro"
+                android:layout_alignEnd="@+id/pro"
+                android:layout_marginEnd="7dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,6 +95,67 @@
                 android:id="@+id/line"
                 android:layout_below="@+id/day_week"
                 android:layout_alignStart="@+id/day_week" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/note"
+                android:id="@+id/imageView"
+                android:layout_below="@+id/line"
+                android:layout_alignStart="@+id/note_tv" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/life"
+                android:id="@+id/imageView2"
+                android:layout_above="@+id/day_month"
+                android:layout_alignEnd="@+id/run_tv" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/run"
+                android:layout_marginEnd="28dp"
+                android:id="@+id/imageView4"
+                android:layout_marginTop="25dp"
+                android:layout_below="@+id/note_tv"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:textSize="10sp"
+                android:id="@+id/note_tv"
+                android:layout_marginRight="128dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/imageView"
+                android:layout_alignStart="@+id/imageView2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.3 mi"
+                android:textSize="10sp"
+                android:id="@+id/life_tv"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/imageView4"
+                android:layout_alignEnd="@+id/imageView4" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3 Fires"
+                android:textSize="10sp"
+                android:id="@+id/run_tv"
+                android:layout_alignBaseline="@+id/day_month"
+                android:layout_alignBottom="@+id/day_month"
+                android:layout_alignStart="@+id/life_tv" />
+
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
