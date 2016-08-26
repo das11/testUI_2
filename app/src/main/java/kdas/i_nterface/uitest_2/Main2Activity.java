@@ -42,6 +42,17 @@ public class Main2Activity extends AppCompatActivity {
                 }
             });
         }
+
+        FloatingActionButton fab3 = (FloatingActionButton)findViewById(R.id.fab_main_3);
+        if(fab3 != null){
+            fab3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(Main2Activity.this, MapsActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
 }
