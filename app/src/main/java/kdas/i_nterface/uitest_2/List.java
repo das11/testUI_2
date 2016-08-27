@@ -41,7 +41,6 @@ public class List extends AppCompatActivity {
 
     Cursor cursor;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -258,11 +257,6 @@ public class List extends AppCompatActivity {
             contact.add(new Contacts(contact_name.get(i), contact_num.get(i)));
         }
     }
-
-
-
-
-
 
 
 }

@@ -38,6 +38,15 @@
         android:layout_below="@+id/fab_main_2"
         android:layout_centerHorizontal="true" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_main_4"
+        app:backgroundTint="@color/some_teal"
+        android:layout_above="@+id/fab_main_3"
+        android:layout_toEndOf="@+id/fab_main_2"
+        android:layout_marginStart="41dp" />
+
     <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
