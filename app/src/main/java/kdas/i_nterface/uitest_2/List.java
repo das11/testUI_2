@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +19,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class List extends AppCompatActivity {
@@ -138,6 +143,14 @@ public class List extends AppCompatActivity {
             loader2.setVisibility(View.GONE);
             loader.setVisibility(View.VISIBLE);
 
+            write_file(contact_name, contact_num);
+
+            File file = new File(Environment.getExternalStorageDirectory(), "text_con.txt");
+            if (file.length() != 0)
+            {
+
+            }
+
             Log.d("Hash :", contact_name.size() + "");
             for (int i = 0; i < contact_num.size(); ++i){
                 if (!contact_name.get(i).equals("") || !contact_num.get(i).equals("")){
@@ -217,6 +230,26 @@ public class List extends AppCompatActivity {
 
 
         }else {
+        }
+    }
+
+    public void write_file(ArrayList<String> name, ArrayList<String> num){
+        try{
+            File file = new File(Environment.getExternalStorageDirectory(), "text_con.txt");
+            FileOutputStream fout = new FileOutputStream(file);
+
+            //FileOutputStream fout = openFileOutput("contacts_kd.txt", MODE_PRIVATE);
+            OutputStreamWriter streamWriter = new OutputStreamWriter(fout);
+
+            for (int i = 0; i < name.size(); ++i){
+                if (!name.get(i).equals("") || !num.get(i).equals("")){
+                    streamWriter.write("#" + i + "\n" + name.get(i) + " " + num.get(i) + "\n\n");
+                }
+            }
+
+            streamWriter.close();
+        }catch (IOException e){
+            //
         }
     }
 

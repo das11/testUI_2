@@ -52,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements
     double distance;
     private java.util.List<LatLng> dpoly = new ArrayList<>();
 
+    String test;
 
     boolean chk;
 
@@ -196,6 +197,8 @@ public class MapsActivity extends FragmentActivity implements
         loctest.setLatitude(26.1834051);
         loctest.setLongitude(91.78202229999999);
 
+        test = build_query(location, loctest);
+
         double la = loctest.getLatitude();
         double lo = loctest.getLongitude();
         LatLng ll = new LatLng(la,lo);
@@ -254,7 +257,8 @@ public class MapsActivity extends FragmentActivity implements
         protected String doInBackground(String... strings) {
 
             HttpHandler httphandler = new HttpHandler();
-            dirresponse = httphandler.GetHTTPData(query_url);
+
+            dirresponse = httphandler.GetHTTPData(test);
 
             return dirresponse;
         }
@@ -351,5 +355,25 @@ public class MapsActivity extends FragmentActivity implements
 //        LatLng sydney = new LatLng(-34, 151);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    public String build_query(Location origin, Location dest){
+        double origin_lat, origin_long, dest_lat, dest_long;
+        StringBuilder query = new StringBuilder();
+        query.append("http://maps.googleapis.com/maps/api/directions/json?origin=");
+
+        origin_lat = origin.getLatitude();
+        origin_long = origin.getLongitude();
+        dest_lat = dest.getLatitude();
+        dest_long = dest.getLongitude();
+
+        query.append(origin_lat + ",");
+        query.append(origin_long + "&destination=");
+        query.append(dest_lat + ",");
+        query.append(dest_long);
+
+        Log.d("BUILD Q", query.toString());
+
+        return query.toString();
     }
 }
