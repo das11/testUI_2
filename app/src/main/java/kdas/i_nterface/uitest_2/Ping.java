@@ -17,12 +17,17 @@ import java.util.ArrayList;
 
 public class Ping extends AppCompatActivity {
 
-    Firebase peers;
+    Firebase peers, peers_name;
 
     java.util.List<String> con_num = new ArrayList<>();
+    java.util.List<String> con_name = new ArrayList<>();
     java.util.List<Contacts> con = new ArrayList<>();
 
     Contact_adapter_ping adapter;
+
+    Thread peer;
+    boolean con_name_done = false;
+    boolean con_num_done = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,35 +48,93 @@ public class Ping extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         peers = new Firebase("https://wifiap-1361.firebaseio.com/peers");
+        peers_name = new Firebase("https://wifiap-1361.firebaseio.com/peers_name");
 
-//        for (int i = 0; i < 6; ++i){
-//            con_num.add("8876721208");
-//        }
+        for (int i = 0; i < 6; ++i) {
+            con_name.add("Kabir Das");
+        }
+        Log.d("CON", con_name.toString());
 //        peers.setValue(con_num);
 
-        peers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                    GenericTypeIndicator<java.util.List<String>> t = new GenericTypeIndicator<java.util.List<String>>() {};
+            peers_name.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    GenericTypeIndicator<java.util.List<String>> t = new GenericTypeIndicator<java.util.List<String>>() {
+                    };
+                    con_name = dataSnapshot.getValue(t);
+                    con_name_done = true;
+                    Log.d("name_done", con_name_done + "\n" + con_name.toString());
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+
+        if (!con_name_done) {
+            peers.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    GenericTypeIndicator<java.util.List<String>> t = new GenericTypeIndicator<java.util.List<String>>() {
+                    };
                     con_num = dataSnapshot.getValue(t);
 
                     loader.setVisibility(View.INVISIBLE);
                     loader2.setVisibility(View.VISIBLE);
 
-                    for (int i = 0; i < con_num.size(); ++i){
-                        con.add(new Contacts("NAME ", con_num.get(i)));
+                    for (int i = 0; i < con_num.size(); ++i) {
+                        con.add(new Contacts(con_name.get(i), con_num.get(i)));
                     }
                     adapter.notifyDataSetChanged();
 
                     Log.d(":: ", con_num.toString());
+                    con_num_done = true;
 
-            }
+                }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
 
-            }
-        });
+                }
+            });
+        }
+
+
+
+//        peer = new Thread(){
+//            public void run(){
+//                while (!con_name_done){
+//
+//                }
+//            }
+//        };
+//        peer.start();
+
+//            peers.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    GenericTypeIndicator<java.util.List<String>> t = new GenericTypeIndicator<java.util.List<String>>() {
+//                    };
+//                    con_num = dataSnapshot.getValue(t);
+//
+//                    loader.setVisibility(View.INVISIBLE);
+//                    loader2.setVisibility(View.VISIBLE);
+//
+//                    for (int i = 0; i < con_num.size(); ++i) {
+//                        con.add(new Contacts("ds", con_num.get(i)));
+//                    }
+//                    adapter.notifyDataSetChanged();
+//
+//                    Log.d(":: ", con_num.toString());
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(FirebaseError firebaseError) {
+//
+//                }
+//            });
 
 
 
