@@ -42,9 +42,9 @@
         app:color_array="@array/dot_colors_toolbar"
         app:dot_radius="4dp"
         app:number_of_dots="2"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginStart="50dp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/text_dot_loader_ping"
-        android:layout_marginStart="22dp" />
+        android:layout_alignStart="@+id/text_dot_loader_ping" />
 
 </RelativeLayout>

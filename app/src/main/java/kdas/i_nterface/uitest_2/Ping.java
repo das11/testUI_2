@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class Ping extends AppCompatActivity {
 
+    com.bhargavms.dotloader.DotLoader loader, loader2;
+
     Firebase peers, peers_name;
 
     java.util.List<String> con_num = new ArrayList<>();
@@ -41,8 +43,8 @@ public class Ping extends AppCompatActivity {
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-        final com.bhargavms.dotloader.DotLoader loader = (com.bhargavms.dotloader.DotLoader)findViewById(R.id.text_dot_loader_ping);
-        final com.bhargavms.dotloader.DotLoader loader2 = (com.bhargavms.dotloader.DotLoader)findViewById(R.id.text_dot_loader_toolbar_ping_2);
+        loader = (com.bhargavms.dotloader.DotLoader)findViewById(R.id.text_dot_loader_ping);
+        loader2 = (com.bhargavms.dotloader.DotLoader)findViewById(R.id.text_dot_loader_toolbar_ping_2);
 
         loader2.setVisibility(View.INVISIBLE);
 
@@ -50,11 +52,15 @@ public class Ping extends AppCompatActivity {
         peers = new Firebase("https://wifiap-1361.firebaseio.com/peers");
         peers_name = new Firebase("https://wifiap-1361.firebaseio.com/peers_name");
 
-        for (int i = 0; i < 6; ++i) {
-            con_name.add("Kabir Das");
-        }
-        Log.d("CON", con_name.toString());
+//        for (int i = 0; i < 6; ++i) {
+//            con_name.add("Kabir Das");
+//        }
+//        Log.d("CON", con_name.toString());
 //        peers.setValue(con_num);
+
+        //################## SP test
+//        SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
+//        Log.d("pref", pref.getString("Number",""));
 
             peers_name.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -63,6 +69,7 @@ public class Ping extends AppCompatActivity {
                     };
                     con_name = dataSnapshot.getValue(t);
                     con_name_done = true;
+                    peer();
                     Log.d("name_done", con_name_done + "\n" + con_name.toString());
                 }
 
@@ -72,7 +79,11 @@ public class Ping extends AppCompatActivity {
                 }
             });
 
-        if (!con_name_done) {
+
+    }//####################
+
+    public void peer(){
+        if (con_name_done) {
             peers.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -99,45 +110,8 @@ public class Ping extends AppCompatActivity {
                 }
             });
         }
-
-
-
-//        peer = new Thread(){
-//            public void run(){
-//                while (!con_name_done){
-//
-//                }
-//            }
-//        };
-//        peer.start();
-
-//            peers.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    GenericTypeIndicator<java.util.List<String>> t = new GenericTypeIndicator<java.util.List<String>>() {
-//                    };
-//                    con_num = dataSnapshot.getValue(t);
-//
-//                    loader.setVisibility(View.INVISIBLE);
-//                    loader2.setVisibility(View.VISIBLE);
-//
-//                    for (int i = 0; i < con_num.size(); ++i) {
-//                        con.add(new Contacts("ds", con_num.get(i)));
-//                    }
-//                    adapter.notifyDataSetChanged();
-//
-//                    Log.d(":: ", con_num.toString());
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(FirebaseError firebaseError) {
-//
-//                }
-//            });
-
-
-
-
     }
+
+
+
 }

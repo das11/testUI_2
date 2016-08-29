@@ -64,7 +64,7 @@
         app:elevation="5dp"
         app:layout_anchorGravity="right|end|bottom"
         android:layout_marginRight="35dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/ping_w"
         app:backgroundTint="@color/yellow_2"
         />

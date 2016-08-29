@@ -104,7 +104,10 @@ public class Contact_adapter_ping extends RecyclerView.Adapter<Contact_adapter_p
         f2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String num = condata.contact_num;
+
                 Intent i = new Intent(getContext(), MapsActivity.class);
+                i.putExtra("pinger_num", num);
                 getContext().startActivity(i);
             }
         });

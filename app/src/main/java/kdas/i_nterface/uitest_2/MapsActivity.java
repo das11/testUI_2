@@ -2,6 +2,7 @@ package kdas.i_nterface.uitest_2;
 
 import android.Manifest;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -9,8 +10,13 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -53,8 +59,13 @@ public class MapsActivity extends FragmentActivity implements
     private java.util.List<LatLng> dpoly = new ArrayList<>();
 
     String test;
+    String user_number, pinger_num, pinger_url ;
 
-    boolean chk;
+    Location current, pinger_location;
+
+    boolean chk, once = false;
+
+    Firebase user, flocation, pinger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,26 +76,20 @@ public class MapsActivity extends FragmentActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.fragment_map);
-//        mapFragment.getMapAsync(this);
+        Firebase.setAndroidContext(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            pinger_num = extras.getString("pinger_num");
+            pinger_url = "https://wifiap-1361.firebaseio.com/" + pinger_num;
+        }
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-//
-//        if (checkperm()){
-//            return;
-//        }else{
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
-//        }
-//
-//        mLocationRequest = LocationRequest.create()
-//                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-//                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-//                .setFastestInterval(4 * 1000); // 1 second, in milliseconds
 
 
         if (chk = checkperm()){
@@ -102,6 +107,19 @@ public class MapsActivity extends FragmentActivity implements
             }
         }
 
+        SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
+        user_number = pref.getString("Number","");
+
+        String furl = "https://wifiap-1361.firebaseio.com/" + user_number;
+        Log.d("furl", furl);
+
+        user = new Firebase(furl);
+        pinger = new Firebase(pinger_url);
+        pinger.child("pinged").setValue("true");
+        pinger.child("pinged_by").setValue(user_number);
+        Log.d("pinger \n user", pinger.toString() + "\n" + user.toString());
+
+
         //new getdirectionresp().execute("");
 
     }
@@ -110,7 +128,6 @@ public class MapsActivity extends FragmentActivity implements
     protected void onResume() {
         super.onResume();
         mGoogleApiClient.connect();
-
 
     }
 
@@ -121,6 +138,22 @@ public class MapsActivity extends FragmentActivity implements
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
         }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent objEvent) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyUp(keyCode, objEvent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("back", "back");
+        pinger.child("pinged").setValue("false");
+        finish();
     }
 
     public boolean checkperm(){
@@ -166,8 +199,12 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    private void handleLocation(Location location)
+    private void handleLocation(final Location location)
     {
+        flocation = user.child("location");
+        flocation.setValue(location);
+
+
         //Toast.makeText(getApplicationContext(),"polo2", Toast.LENGTH_SHORT).show();
         Log.d("locc", location.toString());
 
@@ -190,26 +227,22 @@ public class MapsActivity extends FragmentActivity implements
                 .build();
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(latlong));
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 2000, null);
+        if (!once){
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 2000, null);
+            once = true;
+        }
 
 
         Location loctest = new Location("");
         loctest.setLatitude(26.1834051);
         loctest.setLongitude(91.78202229999999);
 
-        test = build_query(location, loctest);
-
-        double la = loctest.getLatitude();
-        double lo = loctest.getLongitude();
-        LatLng ll = new LatLng(la,lo);
-
-        mMap.addMarker(new MarkerOptions()
-                .position(ll));
+        getPingerLocation(location);
 
         //##################################### Drawwing poly too
         new getdirectionresp().execute("");
 
-        distance = CalculationByDistance(latlong,ll);
+        //distance = CalculationByDistance(latlong,ll);
         //Toast.makeText(getApplicationContext(), "::" + distance, Toast.LENGTH_SHORT).show();
 
         if (testtoast != null){
@@ -219,6 +252,41 @@ public class MapsActivity extends FragmentActivity implements
         testtoast.show();
 
 
+    }
+
+    public void getPingerLocation(final Location loc){
+
+        Log.d("plococ", "##");
+        pinger.child("location").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String lat, longi;
+                lat = dataSnapshot.child("latitude").getValue().toString();
+                longi = dataSnapshot.child("longitude").getValue().toString();
+
+                pinger_location = new Location("");
+                pinger_location.setLatitude(Double.parseDouble(lat));
+                pinger_location.setLongitude(Double.parseDouble(longi));
+
+                double la = pinger_location.getLatitude();
+                double lo = pinger_location.getLongitude();
+                LatLng ll = new LatLng(la,lo);
+
+                mMap.addMarker(new MarkerOptions()
+                        .position(ll));
+
+                Log.d("lat", dataSnapshot.child("latitude").getValue().toString());
+
+                Log.d("ploc", dataSnapshot.getValue().toString());
+                test = build_query(loc, pinger_location);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -351,10 +419,6 @@ public class MapsActivity extends FragmentActivity implements
             mMap.setMyLocationEnabled(true);
         }
 
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     public String build_query(Location origin, Location dest){

@@ -64,6 +64,28 @@ public class Main2Activity extends AppCompatActivity {
                 }
             });
         }
+
+        FloatingActionButton fab5 = (FloatingActionButton)findViewById(R.id.fab_main_5);
+        if (fab5 != null){
+            fab5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(Main2Activity.this, Init.class);
+                    startActivity(i);
+                }
+            });
+        }
+
+        FloatingActionButton fab6 = (FloatingActionButton)findViewById(R.id.fab_main_6);
+        if (fab6 != null){
+            fab6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(Main2Activity.this, share_location.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
 }
