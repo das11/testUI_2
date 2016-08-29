@@ -116,48 +116,48 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
         }
 
         java.util.List<String> events_count = events_data.m_events;
-        for (int i = 0; i < events_count.size(); ++i){
-            if (events_count.get(i) == "true"){
-                switch (i){
-                    case 0 : {
-                        holder.pre1.setVisibility(View.VISIBLE);
-                        break;
-                    }
-
-                    case 1 : {
-                        holder.pre2.setVisibility(View.VISIBLE);
-                        break;
-                    }
-
-                    case 2 : {
-                        holder.pre3.setVisibility(View.VISIBLE);
-                        break;
-                    }
-
-                    default: //
-                }
-            }
-            else {
-                switch (i){
-                    case 0 : {
-                        holder.pre1.setVisibility(View.INVISIBLE);
-                        break;
-                    }
-
-                    case 1 : {
-                        holder.pre2.setVisibility(View.INVISIBLE);
-                        break;
-                    }
-
-                    case 2 : {
-                        holder.pre3.setVisibility(View.INVISIBLE);
-                        break;
-                    }
-
-                    default: //
-                }
-            }
-        }
+//        for (int i = 0; i < events_count.size(); ++i){
+//            if (events_count.get(i) == "true"){
+//                switch (i){
+//                    case 0 : {
+//                        holder.pre1.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//
+//                    case 1 : {
+//                        holder.pre2.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//
+//                    case 2 : {
+//                        holder.pre3.setVisibility(View.VISIBLE);
+//                        break;
+//                    }
+//
+//                    default: //
+//                }
+//            }
+//            else {
+//                switch (i){
+//                    case 0 : {
+//                        holder.pre1.setVisibility(View.INVISIBLE);
+//                        break;
+//                    }
+//
+//                    case 1 : {
+//                        holder.pre2.setVisibility(View.INVISIBLE);
+//                        break;
+//                    }
+//
+//                    case 2 : {
+//                        holder.pre3.setVisibility(View.INVISIBLE);
+//                        break;
+//                    }
+//
+//                    default: //
+//                }
+//            }
+//        }
     }
 
     @Override
