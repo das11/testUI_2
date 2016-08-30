@@ -24,7 +24,7 @@ public class Main3Activity extends AppCompatActivity {
     RecyclerView events_rv;
     rv_event_adapter adapter;
 
-    int test_rv_inflate = 10000;
+    int test_rv_inflate = 365;
 
     //Boolean[] count = new Boolean[3];
     List<String> count = new ArrayList<>();
