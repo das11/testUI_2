@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 public class Main2Activity extends AppCompatActivity {
@@ -13,12 +13,12 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.view);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.main2toolbar);
         //setSupportActionBar(toolbar);
 
-        if (toolbar != null)
-            toolbar.setTitle("hello");
-        setSupportActionBar(toolbar);
+//        if (toolbar != null)
+//            toolbar.setTitle("hello");
+//        setSupportActionBar(toolbar);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_main_1);
@@ -55,14 +55,17 @@ public class Main2Activity extends AppCompatActivity {
         }
 
         FloatingActionButton fab4 = (FloatingActionButton)findViewById(R.id.fab_main_4);
-        if(fab != null){
+        if(fab4 != null){
             fab4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(Main2Activity.this, Ping.class);
                     startActivity(i);
+                    Log.d("done", "done");
                 }
             });
+        }else {
+            Log.d("done", "done2");
         }
 
         FloatingActionButton fab5 = (FloatingActionButton)findViewById(R.id.fab_main_5);

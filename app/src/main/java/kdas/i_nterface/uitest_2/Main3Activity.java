@@ -126,6 +126,8 @@ public class Main3Activity extends AppCompatActivity {
             });
         }
 
+
+        //##################### initial offset
         ((LinearLayoutManager) events_rv.getLayoutManager()).scrollToPositionWithOffset(adapter.return_present_pos(), 0);
 
     }

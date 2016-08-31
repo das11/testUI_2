@@ -6,9 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.vipul.hp_hp.timelineview.TimelineView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,17 +22,15 @@ public class test_timeline_adpater extends RecyclerView.Adapter<test_timeline_ad
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public  TimelineView mTimelineView;
+        public TextView note;
 
         private Context context;
 
 
-        public ViewHolder(Context context, View itemView, int viewType) {
+        public ViewHolder(Context context, View itemView) {
             super(itemView);
-
-            mTimelineView = (TimelineView) itemView.findViewById(R.id.time_line);
-            mTimelineView.initLine(viewType);
             this.context = context;
+            note = (TextView)itemView.findViewById(R.id.textView4);
 
             itemView.setOnClickListener(this);
         }
@@ -49,10 +46,10 @@ public class test_timeline_adpater extends RecyclerView.Adapter<test_timeline_ad
         }
     }
 
-    private java.util.List<events> mevents;
+    private java.util.List<timeline_day_data> mevents;
     private Context mcontext;
 
-    public test_timeline_adpater(Context context, java.util.List<events> m_events){
+    public test_timeline_adpater(Context context, java.util.List<timeline_day_data> m_events){
         mevents = m_events;
         mcontext = context;
     }
@@ -61,10 +58,6 @@ public class test_timeline_adpater extends RecyclerView.Adapter<test_timeline_ad
         return mcontext;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return TimelineView.getTimeLineViewType(position,getItemCount());
-    }
 
     @Override
     public test_timeline_adpater.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,7 +65,7 @@ public class test_timeline_adpater extends RecyclerView.Adapter<test_timeline_ad
 
         LayoutInflater inflator = LayoutInflater.from(context);
         View row = inflator.inflate(R.layout.test_timline_row, parent, false);
-        ViewHolder viewholder = new ViewHolder(getContext(), row, viewType);
+        ViewHolder viewholder = new ViewHolder(getContext(), row);
 
         return viewholder;
     }
@@ -80,8 +73,9 @@ public class test_timeline_adpater extends RecyclerView.Adapter<test_timeline_ad
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        events events_data = mevents.get(position);
+        timeline_day_data pos_data = mevents.get(position);
 
+        holder.note.setText(pos_data.temp);
 
     }
 

@@ -71,7 +71,7 @@ public class List extends AppCompatActivity {
         adapter = new Contact_adapter(this, contact);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        //adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 
     }
 

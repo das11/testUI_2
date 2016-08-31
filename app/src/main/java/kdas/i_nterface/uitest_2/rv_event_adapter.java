@@ -1,6 +1,7 @@
 package kdas.i_nterface.uitest_2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Interface on 18/08/16.
@@ -53,10 +56,9 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
         int pos = getLayoutPosition();
         Toast.makeText(context, pos + "", Toast.LENGTH_SHORT).show();
 
-//        if (pos == 0) {
-//            Intent i = new Intent(context, Main2Activity.class);
-//            context.startActivity(i);
-//        }
+            Intent i = new Intent(context, EventTimeline.class);
+            i.putExtra("day", pos + 1);
+            context.startActivity(i);
 
     }
 }
