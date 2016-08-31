@@ -55,7 +55,8 @@
         <activity android:name=".Ping" />
         <activity android:name=".Init" />
         <activity android:name=".share_location" />
-        <activity android:name=".EventTimeline"></activity>
+        <activity android:name=".EventTimeline" />
+        <activity android:name=".Note"></activity>
     </application>
 
 </manifest>

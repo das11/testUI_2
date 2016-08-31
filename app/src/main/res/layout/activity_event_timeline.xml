@@ -16,6 +16,25 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:id="@+id/view" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/view"
+            android:src="@drawable/earth"
+            android:id="@+id/imageView3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Developer's on a coffee break, be back soon !"
+            android:fontFamily="sans-serif-light"
+            android:textSize="22sp"
+            android:id="@+id/textView8"
+            android:layout_marginTop="62dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignTop="@+id/imageView3"
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>

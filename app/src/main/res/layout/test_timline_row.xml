@@ -63,6 +63,7 @@
                                 android:fontFamily="sans-serif-thin"
                                 android:text="@string/test"
                                 android:textStyle="bold"
+                                android:textSize="18sp"
                                 android:id="@+id/textView4"
                                 android:layout_marginRight="4dp"
                                 android:layout_below="@+id/imageView5"

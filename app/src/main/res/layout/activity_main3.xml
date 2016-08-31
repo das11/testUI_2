@@ -25,10 +25,10 @@
         android:layout_alignParentStart="true" />
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:id="@+id/view2"
-        android:src="@drawable/me"
+        android:src="@drawable/user"
         app:layout_anchor="@+id/toolbar_event"
         app:layout_anchorGravity="center|bottom"
         android:layout_alignParentTop="true"
@@ -38,17 +38,18 @@
     <com.github.sundeepk.compactcalendarview.CompactCalendarView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/compactcalendar_view"
-        android:layout_marginTop="270dp"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         app:compactCalendarTargetHeight="240dp"
         app:compactCalendarTextSize="12sp"
-        app:compactCalendarBackgroundColor="#ffe95451"
+        app:compactCalendarBackgroundColor="@color/some_teal"
         app:compactCalendarTextColor="#fff"
         app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
         app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
         app:compactCalendarMultiEventIndicatorColor="#fff"
-        android:visibility="invisible"/>
+        android:visibility="invisible"
+        android:layout_below="@+id/view2"
+        android:layout_alignParentStart="true" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -59,6 +60,26 @@
         android:layout_marginEnd="21dp"
         android:layout_below="@+id/compactcalendar_view"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="18dp" />
+        android:layout_marginTop="18dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Day"
+        android:textSize="18sp"
+        android:id="@+id/textView6"
+        android:layout_alignTop="@+id/down"
+        android:layout_alignStart="@+id/fab_month" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/down"
+        android:src="@drawable/down"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/textView6" />
+
 
 </RelativeLayout>

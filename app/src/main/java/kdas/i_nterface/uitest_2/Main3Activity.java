@@ -8,14 +8,22 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Main3Activity extends AppCompatActivity {
@@ -29,22 +37,46 @@ public class Main3Activity extends AppCompatActivity {
     //Boolean[] count = new Boolean[3];
     List<String> count = new ArrayList<>();
 
+    String furl, gist_note;
+    int furl_x = 244;
+    Firebase note;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        Firebase.setAndroidContext(this);
+
         getSupportActionBar().hide();
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_event);
         //setSupportActionBar(toolbar);
 
         events_rv = (RecyclerView)findViewById(R.id.rv_schedule);
         final FloatingActionButton month_fab = (FloatingActionButton)findViewById(R.id.fab_month);
+        ImageView down = (ImageView)findViewById(R.id.down);
         final com.github.sundeepk.compactcalendarview.CompactCalendarView month_view = (com.github.sundeepk.compactcalendarview.CompactCalendarView)findViewById(R.id.compactcalendar_view);
 
         for (int i = 0; i < 3; ++i){
             //count[i] = true;
             count.add(i, "true");
         }
+
+        furl = "https://wifiap-1361.firebaseio.com/8876721208/data/" + furl_x + "/gist_note";
+        Log.d("furl", furl);
+        note = new Firebase(furl);
+
+        note.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                gist_note = dataSnapshot.getValue(String.class);
+                Log.d("gist", gist_note);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         for (int i = 0; i < test_rv_inflate; ++i){
             mevents.add(new events(count));
@@ -56,8 +88,8 @@ public class Main3Activity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), test_rv_inflate + " RV rows drawn, dayummm!", Toast.LENGTH_SHORT).show();
 
-        if (month_fab != null){
-            month_fab.setOnClickListener(new View.OnClickListener() {
+        if (down != null){
+            down.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (month_view != null){

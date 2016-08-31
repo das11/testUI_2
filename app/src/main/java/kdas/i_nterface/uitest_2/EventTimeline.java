@@ -104,14 +104,6 @@ public class EventTimeline extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
         timeline = (RecyclerView)findViewById(R.id.botttom_sheet_rv);
 
 //        for (int i = 0; i < 3; ++i){

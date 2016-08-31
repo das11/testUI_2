@@ -50,7 +50,7 @@ public class MapsActivity extends FragmentActivity implements
     private Location location;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationRequest mLocationRequest;
-    private Marker marker;
+    private Marker marker, pinger_marker;
     Toast testtoast;
 
     private String dirresponse, query_url = "http://maps.googleapis.com/maps/api/directions/json?origin=26.1861458,91.7535008&destination=26.1834051,91.78202229999999";
@@ -65,7 +65,7 @@ public class MapsActivity extends FragmentActivity implements
 
     boolean chk, once = false;
 
-    Firebase user, flocation, pinger;
+    Firebase user, flocation, pinger, notif, notif_pinger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,8 +273,24 @@ public class MapsActivity extends FragmentActivity implements
                 double lo = pinger_location.getLongitude();
                 LatLng ll = new LatLng(la,lo);
 
-                mMap.addMarker(new MarkerOptions()
-                        .position(ll));
+                /////
+                double lao = loc.getLatitude();
+                double loo = loc.getLongitude();
+                LatLng ori = new LatLng(lao,loo);
+
+                double dis = CalculationByDistance(ori, ll);
+                Log.d("DIS", dis + "");
+                if (dis <= 0.1){
+                    setnotif_fire();
+                }
+
+                if(pinger_marker != null){
+                    pinger_marker.remove();
+                }
+
+                MarkerOptions mopts = new MarkerOptions().position(ll);
+                pinger_marker = mMap.addMarker(mopts);
+
 
                 Log.d("lat", dataSnapshot.child("latitude").getValue().toString());
 
@@ -287,6 +303,18 @@ public class MapsActivity extends FragmentActivity implements
 
             }
         });
+    }
+
+    public void setnotif_fire()
+    {
+        String furl = "https://wifiap-1361.firebaseio.com/" + user_number + "/notif";
+        String furl_pinger = "https://wifiap-1361.firebaseio.com/" + pinger_num + "/notif";;
+
+        notif = new Firebase(furl);
+        notif_pinger = new Firebase(furl_pinger);
+
+        notif.setValue("true");
+        notif_pinger.setValue("true");
     }
 
     @Override

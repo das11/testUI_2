@@ -66,6 +66,7 @@ public class Init extends AppCompatActivity {
 
                     init_card.setVisibility(View.INVISIBLE);
                     done_done.setVisibility(View.VISIBLE);
+                    finish();
                 }
             });
         }

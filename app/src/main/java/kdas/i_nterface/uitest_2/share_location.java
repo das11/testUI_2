@@ -161,6 +161,7 @@ public class share_location extends AppCompatActivity implements
                     thread_kill = true;
                 }
             });
+            finish();
         }
 
     }

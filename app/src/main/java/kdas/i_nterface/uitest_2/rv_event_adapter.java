@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,13 +25,17 @@ import java.util.GregorianCalendar;
  */
 public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.ViewHolder>{
 
+    String furl, gist_note;
+    int furl_x = 244;
+    Firebase note;
+
     int high_pos;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     public com.github.pavlospt.CircleView pre1, pre2, pre3;
     public com.mikhaellopez.circularimageview.CircularImageView pro;
-    public TextView day_month, day_week, runtv, lifetv, notetv;
+    public TextView day_month, day_week, runtv, lifetv, notetv, gist_note;
     public View line;
 
 
@@ -45,6 +54,7 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
         this.runtv = (TextView)itemView.findViewById(R.id.run_tv);
         this.lifetv = (TextView)itemView.findViewById(R.id.life_tv);
         this.notetv = (TextView)itemView.findViewById(R.id.note_tv);
+        this.gist_note = (TextView)itemView.findViewById(R.id.mini_data_card_text);
         this.context = context;
 
         itemView.setOnClickListener(this);
@@ -88,9 +98,29 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
     }
 
     @Override
-    public void onBindViewHolder(rv_event_adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final rv_event_adapter.ViewHolder holder, int position) {
 
         events events_data = mevents.get(position);
+
+        furl = "https://wifiap-1361.firebaseio.com/8876721208/data/" + furl_x + "/gist_note";
+        Log.d("furl", furl);
+        note = new Firebase(furl);
+
+        note.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                gist_note = dataSnapshot.getValue(String.class);
+                holder.gist_note.setText(gist_note);
+                Log.d("gist", gist_note);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
         //Calendar date = getdate_from_pos(position);
         Date date = getdate_from_pos(position);
 
