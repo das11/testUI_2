@@ -17,9 +17,9 @@ import java.util.Date;
 
 public class Note extends AppCompatActivity {
 
-    String note, user_number, furl, furl2, furlpoint;
+    String note, user_number, furl, furl2, furlpoint, furlnotif;
     int ipoints;
-    Firebase gist_note, note2, points;
+    Firebase gist_note, note2, points, notif_reset;
 
     boolean done1 = false;
     boolean done2 = false;
@@ -49,9 +49,12 @@ public class Note extends AppCompatActivity {
 
                 furl = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + furlx + "/gist_note";
                 furlpoint = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + furlx + "/points";
+                furlnotif = "https://wifiap-1361.firebaseio.com/" + user_number + "/notif";
+                Log.d("not", furlnotif);
 
                 gist_note = new Firebase(furl);
                 points = new Firebase(furlpoint);
+                notif_reset = new Firebase(furlnotif);
 
                 //gist_note.setValue(note);
 
@@ -68,6 +71,7 @@ public class Note extends AppCompatActivity {
                         note2.setValue(note);
                         done1 = true;
 
+                        notif_reset.setValue("false");
                         finish();
 
                     }
