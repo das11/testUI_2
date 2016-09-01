@@ -245,11 +245,11 @@ public class MapsActivity extends FragmentActivity implements
         //distance = CalculationByDistance(latlong,ll);
         //Toast.makeText(getApplicationContext(), "::" + distance, Toast.LENGTH_SHORT).show();
 
-        if (testtoast != null){
-            testtoast.cancel();
-        }
-        testtoast = Toast.makeText(getApplicationContext(),"At: "+ latlong.toString() + "\n::" + distance,Toast.LENGTH_SHORT);
-        testtoast.show();
+//        if (testtoast != null){
+//            testtoast.cancel();
+//        }
+//        testtoast = Toast.makeText(getApplicationContext(),"At: "+ latlong.toString() + "\n::" + distance,Toast.LENGTH_SHORT);
+//        testtoast.show();
 
 
     }
@@ -283,6 +283,12 @@ public class MapsActivity extends FragmentActivity implements
                 if (dis <= 0.1){
                     setnotif_fire();
                 }
+
+                if (testtoast != null){
+                    testtoast.cancel();
+                }
+                testtoast = Toast.makeText(getApplicationContext(), "Distance :: " + dis, Toast.LENGTH_SHORT);
+                testtoast.show();
 
                 if(pinger_marker != null){
                     pinger_marker.remove();

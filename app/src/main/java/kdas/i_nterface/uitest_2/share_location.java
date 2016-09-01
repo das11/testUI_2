@@ -63,6 +63,7 @@ public class share_location extends AppCompatActivity implements
 
         getSupportActionBar().hide();
 
+        Log.d("##1","1");
         fab1 = (FloatingActionButton)findViewById(R.id.share_static);
         fab2 = (FloatingActionButton)findViewById(R.id.share_real);
         fab_kill = (FloatingActionButton)findViewById(R.id.kill);
@@ -70,33 +71,29 @@ public class share_location extends AppCompatActivity implements
         frame1 = (FrameLayout)findViewById(R.id.static_frame);
         frame2 = (FrameLayout)findViewById(R.id.real_time_frame);
 
+        Log.d("##1","1");
         SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
         user_num = pref.getString("Number", "");
 
+        Log.d("##1","1");
         furl = "https://wifiap-1361.firebaseio.com/" + user_num + "/location";
         user_location = new Firebase(furl);
 
+        Log.d("##1","1");
 
-        set();
-//        run = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                    Log.d("Keep", "running");
-//
-//            }
-//        });
-//        run.start();
-
-
-
-
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
 
         if (chk = checkperm()){
             mLocationRequest = LocationRequest.create()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                     .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                     .setFastestInterval(4 * 1000); // 1 second, in milliseconds
+
+            Log.d("##1","1");
         }else{
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 12);
             if (checkperm()){
@@ -107,62 +104,56 @@ public class share_location extends AppCompatActivity implements
             }
         }
 
-
-
-
-        if (fab1 != null){
-            fab1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!clicked) {
-                        frame1.setBackgroundColor(ContextCompat.getColor(frame1.getContext(), R.color.yellow));
-                        clicked = true;
-                    }
-                    else {
-                        frame1.setBackgroundColor(ContextCompat.getColor(frame1.getContext(), R.color.yellow));
-                        frame2.setBackgroundColor(ContextCompat.getColor(frame2.getContext(), R.color.some_white));
-                    }
-
-                    if (!started) {
-
-
-                        mGoogleApiClient.connect();
-                        started = true;
-                    }
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!clicked) {
+                    frame1.setBackgroundColor(ContextCompat.getColor(frame1.getContext(), R.color.yellow));
+                    clicked = true;
                 }
-            });
-        }
-
-        if (fab2 != null){
-            fab2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    fab_kill.setVisibility(View.VISIBLE);
-                    if (!clicked) {
-                        frame2.setBackgroundColor(ContextCompat.getColor(frame2.getContext(), R.color.yellow));
-                        clicked = true;
-                    }
-                    else {
-                        frame2.setBackgroundColor(ContextCompat.getColor(frame2.getContext(), R.color.yellow));
-                        frame1.setBackgroundColor(ContextCompat.getColor(frame1.getContext(), R.color.some_white));
-                    }
-                    if (!started) {
-                        run_thread();
-                    }
-
+                else {
+                    frame1.setBackgroundColor(ContextCompat.getColor(frame1.getContext(), R.color.yellow));
+                    frame2.setBackgroundColor(ContextCompat.getColor(frame2.getContext(), R.color.some_white));
                 }
-            });
-        }
 
-        if (fab_kill != null){
-            fab_kill.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    thread_kill = true;
+                if (!started) {
+
+
+                    mGoogleApiClient.connect();
+                    started = true;
                 }
-            });
-            finish();
-        }
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fab_kill.setVisibility(View.VISIBLE);
+                if (!clicked) {
+                    frame2.setBackgroundColor(ContextCompat.getColor(frame2.getContext(), R.color.yellow));
+                    clicked = true;
+                }
+                else {
+                    frame2.setBackgroundColor(ContextCompat.getColor(frame2.getContext(), R.color.yellow));
+                    frame1.setBackgroundColor(ContextCompat.getColor(frame1.getContext(), R.color.some_white));
+                }
+                if (!started) {
+                    run_thread();
+                }
+
+            }
+        });
+
+        fab_kill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                thread_kill = true;
+                finish();
+            }
+        });
+
+
+
 
     }
 

@@ -137,8 +137,16 @@ public class EventTimeline extends AppCompatActivity {
                     notes = dataSnapshot.child("notes").getValue(String.class);
 
                     String lat, longi;
-                    lat = dataSnapshot.child("location").child("latitude").getValue().toString();
-                    longi = dataSnapshot.child("location").child("longitude").getValue().toString();
+
+                    if (dataSnapshot.child("location").getValue(String.class).equals("#")){
+                        lat = "21";
+                        longi = "91";
+                    }else {
+
+                        lat = dataSnapshot.child("location").child("latitude").getValue().toString();
+                        longi = dataSnapshot.child("location").child("longitude").getValue().toString();
+                    }
+
 
                     GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<java.util.List<String>>() {};
                     check_ins = dataSnapshot.child("check_ins").getValue(t);

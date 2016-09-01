@@ -21,7 +21,8 @@ public class Init extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    Firebase user, root, pinged, location;
+    Firebase user, root, pinged, location, notif, data, day, gist_note, points, points_data, points_data_node, check_in_count, check_ins, start_time, end_time, point_location, notes, check_ins_data;
+    int fday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,39 @@ public class Init extends AppCompatActivity {
 
                     location = user.child("location");
                     location.setValue("#");
+
+                    notif = user.child("notif");
+                    notif.setValue("false");
+
+                    data = user.child("data");
+                    for (int i = 245; i < 250; ++i){
+                        day = data.child(i + "");
+
+                        gist_note = day.child("gist_note");
+                        points = day.child("points");
+                        points.setValue(1);
+
+                        points_data = day.child("points_data");
+                        points_data_node = points_data.child("0");
+
+                        check_in_count = points_data_node.child("check_in_count");
+                        start_time = points_data_node.child("start_time");
+                        end_time = points_data_node.child("end_time");
+                        notes = points_data_node.child("notes");
+                        check_ins = points_data_node.child("check_ins");
+                        point_location = points_data_node.child("location");
+
+                        check_ins_data = check_ins.child(0 + "");
+                        check_ins_data.setValue("loc");
+
+                        check_in_count.setValue(1);
+                        start_time.setValue("1234");
+                        end_time.setValue("1534");
+                        notes.setValue("No notes saved");
+                        point_location.setValue("#");
+
+
+                    }
 
                     Log.d("user", user.toString());
 

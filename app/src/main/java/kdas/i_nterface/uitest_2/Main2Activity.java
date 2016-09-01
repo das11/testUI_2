@@ -43,6 +43,8 @@ public class Main2Activity extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
         user_num = pref.getString("Number","");
+        Log.d("####", user_num);
+        Log.d("usr", user_num);
 
         ScheduledExecutorService scheduleTaskExecutor = Executors.newScheduledThreadPool(5);
         scheduleTaskExecutor.scheduleAtFixedRate(new Runnable() {
@@ -118,8 +120,10 @@ public class Main2Activity extends AppCompatActivity {
             fab6.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(Main2Activity.this, share_location.class);
-                    startActivity(i);
+                    Intent i2 = new Intent(Main2Activity.this, share_location.class);
+                    startActivity(i2);
+
+//                    Log.d("2","2");
                 }
             });
         }
@@ -139,11 +143,12 @@ public class Main2Activity extends AppCompatActivity {
     public void check_notif(){
 
         String furl = "https://wifiap-1361.firebaseio.com/" + user_num + "/notif";
+        Log.d("ff", furl);
         notif = new Firebase(furl);
         notif.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                bnotif = dataSnapshot.getValue(Boolean.class);
+                bnotif = dataSnapshot.getValue(boolean.class);
                 if (bnotif) {
                     thread = true;
                     run_pug();
