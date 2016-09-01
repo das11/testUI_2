@@ -1,5 +1,6 @@
 package kdas.i_nterface.uitest_2;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -37,8 +38,7 @@ public class Main3Activity extends AppCompatActivity {
     //Boolean[] count = new Boolean[3];
     List<String> count = new ArrayList<>();
 
-    String furl, gist_note;
-    int furl_x = 244;
+    String furl, gist_note, user_num;
     Firebase note;
 
     @Override
@@ -51,6 +51,9 @@ public class Main3Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_event);
         //setSupportActionBar(toolbar);
 
+        SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
+        user_num = pref.getString("Number","");
+
         events_rv = (RecyclerView)findViewById(R.id.rv_schedule);
         final FloatingActionButton month_fab = (FloatingActionButton)findViewById(R.id.fab_month);
         ImageView down = (ImageView)findViewById(R.id.down);
@@ -61,7 +64,13 @@ public class Main3Activity extends AppCompatActivity {
             count.add(i, "true");
         }
 
-        furl = "https://wifiap-1361.firebaseio.com/8876721208/data/" + furl_x + "/gist_note";
+        Date da = new Date();
+        int furl_x = getposition_from_time(da);
+        Log.d("REAL DAU", furl_x + "");
+
+
+
+        furl = "https://wifiap-1361.firebaseio.com/"+ user_num + "/data/" + furl_x + "/gist_note";
         Log.d("furl", furl);
         note = new Firebase(furl);
 

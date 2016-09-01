@@ -280,7 +280,7 @@ public class MapsActivity extends FragmentActivity implements
 
                 double dis = CalculationByDistance(ori, ll);
                 Log.d("DIS", dis + "");
-                if (dis <= 0.1){
+                if (dis >= 0.1){
                     setnotif_fire();
                 }
 

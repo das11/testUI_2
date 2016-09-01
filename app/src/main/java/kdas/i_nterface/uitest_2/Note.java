@@ -13,6 +13,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.Date;
+
 public class Note extends AppCompatActivity {
 
     String note, user_number, furl, furl2, furlpoint;
@@ -41,19 +43,26 @@ public class Note extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 note = note_ed.getText().toString();
-                furl = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + 244 + "/gist_note";
-                furlpoint = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + 244 + "/points";
+
+                Date da = new Date();
+                final int furlx = getposition_from_time(da);
+
+                furl = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + furlx + "/gist_note";
+                furlpoint = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + furlx + "/points";
 
                 gist_note = new Firebase(furl);
                 points = new Firebase(furlpoint);
-                gist_note.setValue(note);
+
+                //gist_note.setValue(note);
+
                 done2 = true;
 
                 points.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ipoints = dataSnapshot.getValue(int.class);
-                        furl2 = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + 244 + "/points_data/" + ipoints +"/notes";
+                        ipoints -= 1;
+                        furl2 = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + furlx + "/points_data/" + ipoints +"/notes";
                         Log.d("furl2", furl2);
                         note2 = new Firebase(furl2);
                         note2.setValue(note);
@@ -75,5 +84,14 @@ public class Note extends AppCompatActivity {
 
 
 
+    }
+
+    public int getposition_from_time(Date date){
+
+        int pos = 0;
+        for (long i = 1451586600000L; i < date.getTime(); i += 86400000){
+            ++pos;
+        }
+        return pos;
     }
 }

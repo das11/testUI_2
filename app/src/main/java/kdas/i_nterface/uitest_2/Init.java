@@ -67,27 +67,30 @@ public class Init extends AppCompatActivity {
                         day = data.child(i + "");
 
                         gist_note = day.child("gist_note");
+                        gist_note.setValue("    Your notes lie within.");
                         points = day.child("points");
-                        points.setValue(1);
+                        points.setValue(2);
 
                         points_data = day.child("points_data");
-                        points_data_node = points_data.child("0");
+                        for (int j = 0; j <2; ++j){
+                            points_data_node = points_data.child(j+"");
 
-                        check_in_count = points_data_node.child("check_in_count");
-                        start_time = points_data_node.child("start_time");
-                        end_time = points_data_node.child("end_time");
-                        notes = points_data_node.child("notes");
-                        check_ins = points_data_node.child("check_ins");
-                        point_location = points_data_node.child("location");
+                            check_in_count = points_data_node.child("check_in_count");
+                            start_time = points_data_node.child("start_time");
+                            end_time = points_data_node.child("end_time");
+                            notes = points_data_node.child("notes");
+                            check_ins = points_data_node.child("check_ins");
+                            point_location = points_data_node.child("location");
 
-                        check_ins_data = check_ins.child(0 + "");
-                        check_ins_data.setValue("loc");
+                            check_ins_data = check_ins.child(0 + "");
+                            check_ins_data.setValue("loc");
 
-                        check_in_count.setValue(1);
-                        start_time.setValue("1234");
-                        end_time.setValue("1534");
-                        notes.setValue("No notes saved");
-                        point_location.setValue("#");
+                            check_in_count.setValue(1);
+                            start_time.setValue("1234");
+                            end_time.setValue("1534");
+                            notes.setValue("No notes saved");
+                            point_location.setValue("#");
+                        }
 
 
                     }

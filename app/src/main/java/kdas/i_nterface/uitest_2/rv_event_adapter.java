@@ -2,6 +2,7 @@ package kdas.i_nterface.uitest_2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +27,6 @@ import java.util.GregorianCalendar;
 public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.ViewHolder>{
 
     String furl, gist_note;
-    int furl_x = 244;
     Firebase note;
 
     int high_pos;
@@ -102,7 +102,15 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
 
         events events_data = mevents.get(position);
 
-        furl = "https://wifiap-1361.firebaseio.com/8876721208/data/" + furl_x + "/gist_note";
+        SharedPreferences pref = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        String user_num = pref.getString("Number", "");
+
+        Date da = new Date();
+        int furl_x = getposition_from_time(da);
+
+
+
+        furl = "https://wifiap-1361.firebaseio.com/"+ user_num +"/data/" + furl_x + "/gist_note";
         Log.d("furl", furl);
         note = new Firebase(furl);
 

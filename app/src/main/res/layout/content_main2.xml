@@ -84,7 +84,8 @@
         android:textSize="18sp"
         android:id="@+id/textView9"
         android:layout_alignTop="@+id/fab_main_5"
-        android:layout_alignStart="@+id/textView10" />
+        android:layout_alignStart="@+id/textView10"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -94,7 +95,8 @@
         android:textSize="18sp"
         android:id="@+id/textView10"
         android:layout_above="@+id/fab_main_1"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,7 +106,8 @@
         android:textSize="18sp"
         android:id="@+id/textView11"
         android:layout_alignBottom="@+id/fab_main_2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -114,7 +117,8 @@
         android:textSize="18sp"
         android:id="@+id/textView12"
         android:layout_alignBottom="@+id/fab_main_4"
-        android:layout_alignStart="@+id/textView11" />
+        android:layout_alignStart="@+id/textView11"
+        android:textStyle="bold" />
 
     <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:layout_width="wrap_content"-->
