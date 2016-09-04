@@ -35,7 +35,7 @@ public class EventTimeline extends AppCompatActivity {
 
     test_timeline_adpater adapater;
 
-    int day, points, c = 0;
+    int day, points, c = 0, cat;
     String user_number;
     String furl_it;
     String check_in_count, start_time, end_time, notes;
@@ -77,13 +77,29 @@ public class EventTimeline extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         day = bundle.getInt("day");
+        cat = bundle.getInt("cat");
         Log.d("Day ::", day + "");
 
         SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
         user_number = pref.getString("Number", "");
 
         String furl = "https://wifiap-1361.firebaseio.com/" + user_number + "/data/" + day;
-        furl_it = furl + "/points_data/";
+
+        switch (cat){
+            case 1 : {
+                furl_it = furl + "/points_data/professional/";
+                break;
+            }
+            case 2 : {
+                furl_it = furl + "/points_data/friends/";
+                break;
+            }
+            case 3 : {
+                furl_it = furl + "/points_data/all/";
+                break;
+            }
+        }
+
         String furl_points = furl + "/points/";
         Log.d("FURL", furl + "\n" + furl_points);
 
@@ -125,7 +141,9 @@ public class EventTimeline extends AppCompatActivity {
         boolean done = false;
         for (int i = 0; i < points; ++i){
             String temp = furl_it + i;
+            Log.d("temp", temp);
             ffurl_it = new Firebase(temp);
+            Log.d("furl_it", ffurl_it+ "  " + i);
             Log.d("1","1");
             ffurl_it.addValueEventListener(new ValueEventListener() {
                 @Override

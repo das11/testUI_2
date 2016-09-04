@@ -26,10 +26,11 @@ import java.util.GregorianCalendar;
  */
 public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.ViewHolder>{
 
-    String furl, gist_note;
-    Firebase note;
+    String furl, gist_note, user_root;
+    Firebase note, user_day_check;
 
     int high_pos;
+    int count = 0;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -66,7 +67,7 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
         int pos = getLayoutPosition();
         Toast.makeText(context, pos + "", Toast.LENGTH_SHORT).show();
 
-            Intent i = new Intent(context, EventTimeline.class);
+            Intent i = new Intent(context, Timeline_category.class);
             i.putExtra("day", pos + 1);
             context.startActivity(i);
 
@@ -101,35 +102,64 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
     public void onBindViewHolder(final rv_event_adapter.ViewHolder holder, int position) {
 
         events events_data = mevents.get(position);
+        Log.d("day  :::::::: ", position + "");
 
         SharedPreferences pref = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
         String user_num = pref.getString("Number", "");
 
-        Date da = new Date();
-        int furl_x = getposition_from_time(da);
+        final Date da = new Date();
+        //int furl_x = getposition_from_time(da);
 
 
-
-        furl = "https://wifiap-1361.firebaseio.com/"+ user_num +"/data/" + furl_x + "/gist_note";
-        Log.d("furl", furl);
-        note = new Firebase(furl);
-
-        note.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                gist_note = dataSnapshot.getValue(String.class);
-                holder.gist_note.setText(gist_note);
-                Log.d("gist", gist_note);
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-
+//        int furl_x = position + 1;
+//
+//        user_root = "https://wifiap-1361.firebaseio.com/"+ user_num +"/data/" + furl_x;
+//
+//        furl = "https://wifiap-1361.firebaseio.com/"+ user_num +"/data/" + furl_x + "/gist_note";
+//        final  String furl_alt = "https://wifiap-1361.firebaseio.com/"+ user_num +"/data/247/gist_note";
+//        Log.d("furl_x", furl);
+//
+//        user_day_check = new Firebase(user_root);
+//        Log.d(user_day_check + "", (user_day_check.child(furl_x + "") + " :::: null"));
+//        user_day_check.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if (!dataSnapshot.exists()){
+//                    Log.d("null ::::::::: ", dataSnapshot.exists()  + " null");
+//                    holder.gist_note.setText("Your Notes");
+//                }
+//                else{
+//
+//                    Log.d("TRUE ::::::::", "true");
+////                    note = new Firebase(furl);
+////
+////                    note.addValueEventListener(new ValueEventListener() {
+////                        @Override
+////                        public void onDataChange(DataSnapshot dataSnapshot) {
+////                            gist_note = dataSnapshot.getValue(String.class);
+////                            holder.gist_note.setText(gist_note);
+////                            Log.d("gist_ada" + count, gist_note);
+////                            ++count;
+////
+////                        }
+////
+////                        @Override
+////                        public void onCancelled(FirebaseError firebaseError) {
+////
+////                        }
+////                    });
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//
+//            }
+//        });
 
         //Calendar date = getdate_from_pos(position);
+
         Date date = getdate_from_pos(position);
 
         String day, month, day_week;
@@ -140,6 +170,32 @@ public class rv_event_adapter extends RecyclerView.Adapter<rv_event_adapter.View
 
         holder.day_month.setText(day);
         holder.day_week.setText(day_week);
+        holder.gist_note.setText("NOTES"); // ## DEFAULT backport
+
+        int note_pos = position+1;
+        furl = "https://wifiap-1361.firebaseio.com/" + user_num + "/data/" + note_pos;
+        Log.d("furl_note", furl);
+
+        note = new Firebase(furl);
+        note.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    Log.d("NO DAY", "NO DAY");
+                    holder.gist_note.setText("NO DAY");
+                }
+                else{
+                    Log.d("DAY", "DAY");
+                    Log.d("DAY :: ", dataSnapshot.child("gist_note").toString());
+                    holder.gist_note.setText(dataSnapshot.child("gist_note").getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
         high_pos = return_present_pos();

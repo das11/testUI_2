@@ -7,6 +7,9 @@
     <color name="some_teal">#1D9788</color>
     <color name="some_teal2">#44B3A5</color>
     <color name="some_teal3">#1D9788</color>
+    <color name="some_teal4">#409c85</color>
+
+    <color name="trans">#6613fff6</color>
 
     <color name="yellow">#F9A825</color>
     <color name="yellow_2">#FFEB3B</color>

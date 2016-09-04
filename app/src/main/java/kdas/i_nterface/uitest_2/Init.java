@@ -21,7 +21,7 @@ public class Init extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    Firebase user, root, pinged, location, notif, data, day, gist_note, points, points_data, points_data_node, check_in_count, check_ins, start_time, end_time, point_location, notes, check_ins_data;
+    Firebase user, root, pinged, location, notif, data, day, gist_note, points, points_data, points_data_node, check_in_count, check_ins, start_time, end_time, point_location, notes, check_ins_data, professional, friends, all;
     int fday;
 
     @Override
@@ -63,7 +63,7 @@ public class Init extends AppCompatActivity {
                     notif.setValue("false");
 
                     data = user.child("data");
-                    for (int i = 245; i < 250; ++i){
+                    for (int i = 245; i < 260; ++i){
                         day = data.child(i + "");
 
                         gist_note = day.child("gist_note");
@@ -72,25 +72,61 @@ public class Init extends AppCompatActivity {
                         points.setValue(2);
 
                         points_data = day.child("points_data");
-                        for (int j = 0; j <2; ++j){
-                            points_data_node = points_data.child(j+"");
 
-                            check_in_count = points_data_node.child("check_in_count");
-                            start_time = points_data_node.child("start_time");
-                            end_time = points_data_node.child("end_time");
-                            notes = points_data_node.child("notes");
-                            check_ins = points_data_node.child("check_ins");
-                            point_location = points_data_node.child("location");
+                        professional = points_data.child("professional");
+                        friends = points_data.child("friends");
+                        all = points_data.child("all");
 
-                            check_ins_data = check_ins.child(0 + "");
-                            check_ins_data.setValue("loc");
+                        for (int k = 0; k < 3; ++k){
+                            for (int l = 0; l < 2; ++l){
+                                Firebase temp = all;
+                                if (k == 0)
+                                    temp = professional;
+                                else if (k == 1)
+                                    temp = friends;
+                                else if (k == 2)
+                                    temp = all;
 
-                            check_in_count.setValue(1);
-                            start_time.setValue("1234");
-                            end_time.setValue("1534");
-                            notes.setValue("No notes saved");
-                            point_location.setValue("#");
+                                points_data_node = temp.child(l + "");
+
+                                check_in_count = points_data_node.child("check_in_count");
+                                start_time = points_data_node.child("start_time");
+                                end_time = points_data_node.child("end_time");
+                                notes = points_data_node.child("notes");
+                                check_ins = points_data_node.child("check_ins");
+                                point_location = points_data_node.child("location");
+
+                                check_ins_data = check_ins.child(0 + "");
+                                check_ins_data.setValue("loc");
+
+                                check_in_count.setValue(1);
+                                start_time.setValue("1234");
+                                end_time.setValue("1534");
+                                notes.setValue("No notes saved");
+                                point_location.setValue("#");
+
+                            }
                         }
+
+//                        for (int j = 0; j <2; ++j){
+//                            points_data_node = points_data.child(j+"");
+//
+//                            check_in_count = points_data_node.child("check_in_count");
+//                            start_time = points_data_node.child("start_time");
+//                            end_time = points_data_node.child("end_time");
+//                            notes = points_data_node.child("notes");
+//                            check_ins = points_data_node.child("check_ins");
+//                            point_location = points_data_node.child("location");
+//
+//                            check_ins_data = check_ins.child(0 + "");
+//                            check_ins_data.setValue("loc");
+//
+//                            check_in_count.setValue(1);
+//                            start_time.setValue("1234");
+//                            end_time.setValue("1534");
+//                            notes.setValue("No notes saved");
+//                            point_location.setValue("#");
+//                        }
 
 
                     }
@@ -99,6 +135,9 @@ public class Init extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("Number", num);
+                    if (num.length() > 0){
+                        editor.putBoolean("Init", true);
+                    }
                     editor.commit();
 
                     init_card.setVisibility(View.INVISIBLE);

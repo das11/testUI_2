@@ -88,7 +88,7 @@ public class Main3Activity extends AppCompatActivity {
         });
 
         for (int i = 0; i < test_rv_inflate; ++i){
-            mevents.add(new events(count));
+            mevents.add(new events(count, test_rv_inflate));
         }
         adapter = new rv_event_adapter(this, mevents);
         events_rv.setAdapter(adapter);
