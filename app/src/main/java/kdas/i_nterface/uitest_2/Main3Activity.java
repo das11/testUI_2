@@ -43,11 +43,12 @@ public class Main3Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
         Firebase.setAndroidContext(this);
 
-        getSupportActionBar().hide();
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_event);
         //setSupportActionBar(toolbar);
 

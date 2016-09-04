@@ -27,11 +27,12 @@ public class Note extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
         Firebase.setAndroidContext(this);
 
-        getSupportActionBar().hide();
+
 
         SharedPreferences pref = getSharedPreferences("prefs", MODE_PRIVATE);
         user_number = pref.getString("Number","");

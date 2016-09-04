@@ -64,11 +64,13 @@ public class MapsActivity extends FragmentActivity implements
     Location current, pinger_location;
 
     boolean chk, once = false;
+    boolean met = false;
 
     Firebase user, flocation, pinger, notif, notif_pinger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -280,7 +282,12 @@ public class MapsActivity extends FragmentActivity implements
 
                 double dis = CalculationByDistance(ori, ll);
                 Log.d("DIS", dis + "");
-                if (dis >= 0.1){
+
+                if (dis < 0.1){
+                    met = true;
+                }
+
+                if (dis >= 0.1 && met){
                     setnotif_fire();
                 }
 
@@ -384,6 +391,7 @@ public class MapsActivity extends FragmentActivity implements
                         dpoly = decodePoly(poly_S);
 
                         mMap.addPolyline(new PolylineOptions().addAll(dpoly));
+                        Log.d("\n\n::::::: ADDED :::::::", "POLY");
 
                         for (int j = 0; j < dpoly.size(); ++j){
                             Log.d("listp", dpoly.get(j).toString());

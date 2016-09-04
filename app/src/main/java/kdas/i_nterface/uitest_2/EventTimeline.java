@@ -45,11 +45,10 @@ public class EventTimeline extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_timeline);
         Firebase.setAndroidContext(this);
-
-        getSupportActionBar().hide();
 
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_content);
         // The View with the BottomSheetBehavior

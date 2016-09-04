@@ -14,9 +14,10 @@ public class Timeline_category extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_category);
-        getSupportActionBar().hide();
+
 
         Bundle bundle = getIntent().getExtras();
         day = bundle.getInt("day");

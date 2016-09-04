@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main2act"
+    android:background="@color/some_white"
     tools:context="kdas.i_nterface.uitest_2.Main2Activity"
     tools:showIn="@layout/activity_main2">
 
@@ -37,7 +38,8 @@
            android:id="@+id/fab_share"
            android:layout_below="@id/fab_init"
            android:layout_marginTop="60dp"
-           android:layout_marginLeft="20dp" />
+           android:layout_marginLeft="20dp"
+           android:src="@drawable/mars1" />
 
        <android.support.design.widget.FloatingActionButton
            android:layout_width="wrap_content"
