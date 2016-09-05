@@ -43,9 +43,10 @@ public class Main3Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_NoActionBar);
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
+        getSupportActionBar().hide();
         Firebase.setAndroidContext(this);
 
 

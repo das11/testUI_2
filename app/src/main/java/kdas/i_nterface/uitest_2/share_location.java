@@ -56,9 +56,10 @@ public class share_location extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_NoActionBar);
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_location);
+        getSupportActionBar().hide();
 
         Firebase.setAndroidContext(this);
 
