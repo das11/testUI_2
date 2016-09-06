@@ -9,7 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -41,6 +44,10 @@ public class Main3Activity extends AppCompatActivity {
     String furl, gist_note, user_num;
     Firebase note;
 
+    TextView month_name;
+    ImageView down;
+    Animation slide_down, fade_in, slide_up, slide_down_2, slide_up_2, rotate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -49,6 +56,12 @@ public class Main3Activity extends AppCompatActivity {
         getSupportActionBar().hide();
         Firebase.setAndroidContext(this);
 
+        slide_down = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_calendar);
+        slide_down_2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down_calendar);
+        fade_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+        slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+        slide_up_2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
+        rotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_180);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_event);
         //setSupportActionBar(toolbar);
@@ -58,7 +71,7 @@ public class Main3Activity extends AppCompatActivity {
 
         events_rv = (RecyclerView)findViewById(R.id.rv_schedule);
         final FloatingActionButton month_fab = (FloatingActionButton)findViewById(R.id.fab_month);
-        ImageView down = (ImageView)findViewById(R.id.down);
+        down = (ImageView)findViewById(R.id.down);
         final com.github.sundeepk.compactcalendarview.CompactCalendarView month_view = (com.github.sundeepk.compactcalendarview.CompactCalendarView)findViewById(R.id.compactcalendar_view);
 
         for (int i = 0; i < 3; ++i){
@@ -70,7 +83,9 @@ public class Main3Activity extends AppCompatActivity {
         int furl_x = getposition_from_time(da);
         Log.d("REAL DAU", furl_x + "");
 
-
+        month_name = (TextView)findViewById(R.id.month_name);
+        Date temp_month = new Date();
+        month_name.setText(android.text.format.DateFormat.format("MMM", temp_month).toString());
 
         furl = "https://wifiap-1361.firebaseio.com/"+ user_num + "/data/" + furl_x + "/gist_note";
         Log.d("furl", furl);
@@ -106,10 +121,17 @@ public class Main3Activity extends AppCompatActivity {
                     if (month_view != null){
                         if (month_view.getVisibility() == View.INVISIBLE){
                             month_view.setVisibility(View.VISIBLE);
-                        }
-                        else
+                            month_name.setVisibility(View.VISIBLE);
+                            month_view.startAnimation(slide_down);
+                            month_name.startAnimation(slide_down_2);
+                            down.startAnimation(rotate);
+                        }else if (month_view.getVisibility() == View.VISIBLE){
+                            month_view.startAnimation(slide_up);
+                            month_name.startAnimation(slide_up_2);
                             month_view.setVisibility(View.INVISIBLE);
-
+                            month_name.setVisibility(View.INVISIBLE);
+                            down.startAnimation(rotate);
+                        }
                     }
 
                     //((LinearLayoutManager) events_rv.getLayoutManager()).scrollToPositionWithOffset(10, 0);
@@ -126,6 +148,7 @@ public class Main3Activity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         Event test_ev = new Event(R.color.some_teal2, test.getTime(), "This is a test event, which will later track the av. activity fetched from Firebase !");
         if (month_view != null)
             month_view.addEvent(test_ev);
@@ -154,6 +177,7 @@ public class Main3Activity extends AppCompatActivity {
                     java.util.List<Event> ev = month_view.getEvents(dateClicked);
                     ((LinearLayoutManager) events_rv.getLayoutManager()).scrollToPositionWithOffset(getposition_from_time(dateClicked), 0);
 
+
                     Toast.makeText(getApplicationContext(), ev + "", Toast.LENGTH_LONG).show();
                     Log.d("cev :: ", dateClicked + " " + cev);
                     Log.d("prev_ev ::", ev + "");
@@ -164,6 +188,9 @@ public class Main3Activity extends AppCompatActivity {
 
                 @Override
                 public void onMonthScroll(Date firstDayOfNewMonth) {
+                    String month = (String) android.text.format.DateFormat.format("MMM", firstDayOfNewMonth);
+                    month_name.setText(month);
+                    Log.d("MONTH :::::", month);
 
                 }
             });

@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -47,6 +49,15 @@ dependencies {
     compile 'com.github.vipulasri:timelineview:1.0.3'
     compile 'com.github.halysongoncalves:pugnotification:1.8.1'
     compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
+    compile 'com.nvanbenschoten.motion:library:1.1.2'
+
+
+    compile 'hanks.xyz:smallbang-library:0.1.2'
+
+    compile 'com.mxn.soul:flowingdrawer-core:1.2.5'
+    compile 'com.nineoldandroids:library:2.4.0'
+
+    compile 'com.android.support:multidex:1.0.1'
 
 
 }

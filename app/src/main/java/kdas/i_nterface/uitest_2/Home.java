@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -20,6 +22,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import br.com.goncalves.pugnotification.notification.PugNotification;
+import xyz.hanks.library.SmallBang;
+import xyz.hanks.library.SmallBangListener;
 
 public class Home extends AppCompatActivity {
 
@@ -34,6 +38,10 @@ public class Home extends AppCompatActivity {
 
     CardView fab2, fab3, fab4, fab_route_ping;
 
+    Animation slide_up;
+    SmallBang mSmallBang;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -41,6 +49,8 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         getSupportActionBar().hide();
+        mSmallBang = SmallBang.attach2Window(this);
+
 
 
         Firebase.setAndroidContext(this);
@@ -59,6 +69,10 @@ public class Home extends AppCompatActivity {
         Log.d("####", user_num);
         Log.d("usr", user_num);
         Log.d("init", init + "");
+
+        slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.popup);
+
+
 
         if (!init){
             Intent i = new Intent(Home.this, Init.class);
@@ -170,40 +184,82 @@ public class Home extends AppCompatActivity {
 //        });
 
         fab2 = (CardView) findViewById(R.id.view10);
+        fab2.startAnimation(slide_up);
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Home.this, share_location.class);
-                startActivity(i);
+                mSmallBang.bang(view,300,new SmallBangListener() {
+                    @Override
+                    public void onAnimationStart() {
+                    }
+
+                    @Override
+                    public void onAnimationEnd() {
+                        Intent i = new Intent(Home.this, share_location.class);
+                        startActivity(i);
+                    }
+                });
+
 
             }
         });
 
         fab3 = (CardView) findViewById(R.id.view11);
+        fab3.startAnimation(slide_up);
         fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Home.this, Main3Activity.class);
-                startActivity(i);
+                mSmallBang.bang(view,300,new SmallBangListener() {
+                    @Override
+                    public void onAnimationStart() {
+                    }
+
+                    @Override
+                    public void onAnimationEnd() {
+                        Intent i = new Intent(Home.this, Main3Activity.class);
+                        startActivity(i);
+                    }
+                });
+
 
             }
         });
 
         fab4 = (CardView) findViewById(R.id.view12);
+        fab4.startAnimation(slide_up);
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Home.this, Ping.class);
-                startActivity(i);
+                mSmallBang.bang(view,300,new SmallBangListener() {
+                    @Override
+                    public void onAnimationStart() {
+                    }
+
+                    @Override
+                    public void onAnimationEnd() {
+                        Intent i = new Intent(Home.this, Ping.class);
+                        startActivity(i);
+                    }
+                });
 
             }
         });
 
         fab_route_ping = (CardView) findViewById(R.id.view13);
+        fab_route_ping.startAnimation(slide_up);
         fab_route_ping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                check_pinged();
+                mSmallBang.bang(view,300,new SmallBangListener() {
+                    @Override
+                    public void onAnimationStart() {
+                    }
+
+                    @Override
+                    public void onAnimationEnd() {
+                        check_pinged();
+                    }
+                });
             }
         });
 

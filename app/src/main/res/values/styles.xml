@@ -10,7 +10,7 @@
     </style>
 
     <style name="AppTheme.LaunchScreen">
-        <item name="colorPrimaryDark">@color/some_teal</item>
+        <item name="colorPrimaryDark">#00ffffff</item>
         <item name="android:windowBackground">@drawable/winback</item>
         <item name="windowNoTitle">true</item>
     </style>
