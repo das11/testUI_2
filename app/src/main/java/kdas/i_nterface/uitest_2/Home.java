@@ -350,9 +350,7 @@ public class Home extends AppCompatActivity implements LocationListener,
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
     }
 
@@ -365,11 +363,10 @@ public class Home extends AppCompatActivity implements LocationListener,
                 .smallIcon(R.drawable.nmsmall)
                 .largeIcon(R.drawable.nmlarge)
                 .flags(Notification.DEFAULT_ALL)
-                .click(Note.class,null)
-                .dismiss(Note.class,null)
+                .click(Note.class, null)
+                .dismiss(Note.class, null)
                 .simple()
                 .build();
-
     }
 
     public void pref_and_init(){

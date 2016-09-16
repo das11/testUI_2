@@ -388,6 +388,10 @@ public class MapsActivity extends FragmentActivity implements
 
                         Log.d("poly",poly_S);
 
+                        if (dpoly != null){
+                            dpoly.clear();
+                        }
+
                         dpoly = decodePoly(poly_S);
 
                         mMap.addPolyline(new PolylineOptions().addAll(dpoly));
