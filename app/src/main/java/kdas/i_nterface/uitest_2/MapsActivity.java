@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
@@ -67,6 +69,8 @@ public class MapsActivity extends FragmentActivity implements
     boolean met = false;
 
     Firebase user, flocation, pinger, notif, notif_pinger;
+
+    Polyline polyline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -388,13 +392,14 @@ public class MapsActivity extends FragmentActivity implements
 
                         Log.d("poly",poly_S);
 
-                        if (dpoly != null){
+                        if (polyline != null){
+                            polyline.remove();
                             dpoly.clear();
                         }
 
                         dpoly = decodePoly(poly_S);
 
-                        mMap.addPolyline(new PolylineOptions().addAll(dpoly));
+                        polyline = mMap.addPolyline(new PolylineOptions().addAll(dpoly).color(ContextCompat.getColor(getApplicationContext(),R.color.some_accent)));
                         Log.d("\n\n::::::: ADDED :::::::", "POLY");
 
                         for (int j = 0; j < dpoly.size(); ++j){

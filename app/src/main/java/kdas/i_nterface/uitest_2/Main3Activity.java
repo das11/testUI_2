@@ -95,7 +95,7 @@ public class Main3Activity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 gist_note = dataSnapshot.getValue(String.class);
-                Log.d("gist", gist_note);
+                Log.d("gist", gist_note + "");
             }
 
             @Override
